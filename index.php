@@ -10,6 +10,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Cat Carousel</title>
+        
 
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
@@ -29,33 +30,19 @@
         </nav>
         <!-- Page content-->
         <div class="container mt-5">
-        
-        <!--fetches names of cats -->
-        <script>
-            fetch("https://api.thecatapi.com/v1/breeds")
-            .then(response => response.json())
-            .then(data => {
-                let select = document.getElementById("cat-breed-select")
-                select.innerHTML = ""
+        <h1>Cat Carousel</h1>
+        <h2>Select a cat breed</h2>
 
-                data.forEach(breed =>{
-                    let option = document.createElement("option")
-                    option.value = breed.id;
-                    option.innerHTML = breed.name;
-                    select.appendChild(option);
-                })
-            })
-            .catch(error => console.error("error fetching cat breeds:", error))
-        </script>
-        
-        
+
         <!--bootstrap grid set up and population -->
         <form method="get" action="carousel.php">
             <label for="cat-breed-select">Choose a breed:</label>
             <select id ="cat-breed-select" name="breed">
-
-                <option value="">loading...</option>
-    
+                <?php forEach ($_SESSION['breeds'] as $breed): ?>
+                    <option value=""><?= htmlspecialchars($breed['id']); ?>
+                        <?= htmlspecialchars($breed['name']); ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
             <input type="submit" value="see cats">
 
