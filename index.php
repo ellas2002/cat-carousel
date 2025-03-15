@@ -29,19 +29,35 @@
         </nav>
         <!-- Page content-->
         <div class="container mt-5">
-
         
+        <!--fetches names of cats -->
+        <script>
+            fetch("https://api.thecatapi.com/v1/breeds")
+            .then(response => response.json())
+            .then(data => {
+                let select = document.getElementById("cat-breed-select")
+                select.innerHTML = ""
+
+                data.forEach(breed =>{
+                    let option = document.createElement("option")
+                    option.value = breed.id;
+                    option.innerHTML = breed.name;
+                    select.appendChild(option);
+                })
+            })
+            .catch(error => console.error("error fetching cat breeds:", error))
+        </script>
+        
+        
+        <!--bootstrap grid set up and population -->
         <form method="get" action="carousel.php">
+            <label for="cat-breed-select">Choose a breed:</label>
+            <select id ="cat-breed-select" name="breed">
 
-            <select type ="select" name="myselect">
-
-                <option value="1">one</option>
-                <option value="2">two</option>
-                <option value="3">three</option>
-
+                <option value="">loading...</option>
+    
             </select>
-
-            <input type="submit" value="click here">
+            <input type="submit" value="see cats">
 
 
 
