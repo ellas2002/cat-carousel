@@ -72,7 +72,37 @@
             </button>
         </div>
         </div>
+        <!-- end of code taken from carousel boot strap -->
+                
 
+        <!-- descriptive section for each chosen cat -->
+         <?php if (isset($_SESSION['selected_breed'])): 
+            $breed = $_SESSION['selected_breed'];
+            ?>
+                
+            <!-- Display breed details if a breed is selected -->
+                <div class="mt-5">
+                    <h3><?= htmlspecialchars($breed['name']); ?></h3>
+                    <p><strong>Description:</strong> <?= htmlspecialchars($breed['description']); ?></p>
+                    <p><strong>Temperament:</strong> <?= htmlspecialchars($breed['temperament']); ?></p>
+                    <p><strong>Life Span:</strong> <?= htmlspecialchars($breed['life_span']); ?> years</p>
+                    <p><strong>Weight:</strong> <?= htmlspecialchars($breed['weight']['imperial']); ?> lbs</p>
+                </div>
+        <?php endif; ?>
+
+        <!-- end of descriptive section for each chosen cat -->
+
+
+        <!-- code taken for stars -->
+        <span class="rating"> 
+            <i class="fa-solid fa-star"></i> 
+            <i class="fa-solid fa-star"></i> 
+            <i class="fa-solid fa-star"></i> 
+            <i class="fa-solid fa-star"></i> 
+            <i class="fa-regular fa-star"></i> 
+        </span>
+
+        <!-- end of code taken for stars -->
 
         </div>
         <!-- Bootstrap core JS-->

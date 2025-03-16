@@ -35,9 +35,29 @@ function getImages(){
     
 }
 
+function getSelectedBreed(){
+    if (isset($_GET['breed'])) {
+        $selected_breed_id = $_GET['breed'];
+    
+        // Find the breed that matches the selected breed ID
+        foreach ($_SESSION['breeds'] as $breed) {
+            if ($breed['id'] == $selected_breed_id) {
+                $_SESSION['selected_breed'] = $breed;  // Store the selected breed in the session
+                break;
+            }
+        }
+    }
+}
+
+if (!isset($_SESSION['selected_breed'])) {
+    $selected_breed = getSelectedBreed();
+    if ($selected_breed) {
+        $_SESSION['selected_breed'] = $selected_breed;
+    }
+}
+
 if (!isset($_SESSION['images'])) {
     $_SESSION['images'] = getImages();
-    var_dump($images);
 }
 
 ?>

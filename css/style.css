@@ -2,7 +2,7 @@
  
 .carousel-wrapper {
     width: 100%;
-    max-width: 600px;
+    max-width: 400px;
     aspect-ratio: 1 / 1; /* Keeps it square */
     /*margin: auto;*/
   }
