@@ -35,17 +35,19 @@
 
 
         <!--bootstrap grid set up and population -->
-        <form method="get" action="carousel.php">
+        <form method="GET" action="carousel.php">
             <label for="cat-breed-select">Choose a breed:</label>
             <select id ="cat-breed-select" name="breed">
                 <?php forEach ($_SESSION['breeds'] as $breed): ?>
-                    <option value=""><?= htmlspecialchars($breed['id']); ?>
+                    <option value="<?= htmlspecialchars($breed['id']); ?>"
+                        <?= (isset($_GET['breed']) && $_GET['breed'] == $breed['id']) ? 'selected' : '' ?>>
                         <?= htmlspecialchars($breed['name']); ?>
                     </option>
                 <?php endforeach; ?>
+
             </select>
             <input type="submit" value="see cats">
-
+        </form>
 
 
         </div>

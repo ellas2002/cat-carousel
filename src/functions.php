@@ -20,4 +20,24 @@ if (!isset($_SESSION['breeds'])) {
     $_SESSION['breeds'] = getNames();
 }
 
+function getImages(){
+    
+    if (isset($_GET['breed'])) {
+        $breedId = $_GET['breed'];
+        $url = "https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=" . $breedId;
+
+        $response = file_get_contents($url);
+
+        return json_decode($response, true); // Convert JSON response to PHP array
+
+    }
+    return [];
+    
+}
+
+if (!isset($_SESSION['images'])) {
+    $_SESSION['images'] = getImages();
+    var_dump($images);
+}
+
 ?>
