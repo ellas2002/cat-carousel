@@ -1,11 +1,6 @@
-
-
 <?php
     session_start();
     include 'src/functions.php';
-
-    // Debug: Check if breed is being passed in URL
-    var_dump($_GET['breed']); 
 ?>
 
 <!DOCTYPE html>
@@ -78,15 +73,12 @@
         <!-- descriptive section for each chosen cat -->
          <?php if (isset($_SESSION['selected_breed'])): 
             $breed = $_SESSION['selected_breed'];
-            ?>
-                
-            <!-- Display breed details if a breed is selected -->
+            ?>                
                 <div class="mt-5">
                     <h3><?= htmlspecialchars($breed['name']); ?></h3>
                     <p><strong>Description:</strong> <?= htmlspecialchars($breed['description']); ?></p>
+                    <p><strong>Origin:</strong> <?= htmlspecialchars($breed['origin']); ?></p>
                     <p><strong>Temperament:</strong> <?= htmlspecialchars($breed['temperament']); ?></p>
-                    <p><strong>Life Span:</strong> <?= htmlspecialchars($breed['life_span']); ?> years</p>
-                    <p><strong>Weight:</strong> <?= htmlspecialchars($breed['weight']['imperial']); ?> lbs</p>
                 </div>
         <?php endif; ?>
 
@@ -94,14 +86,29 @@
 
 
         <!-- code taken for stars -->
-        <span class="rating"> 
-            <i class="fa-solid fa-star"></i> 
-            <i class="fa-solid fa-star"></i> 
-            <i class="fa-solid fa-star"></i> 
-            <i class="fa-solid fa-star"></i> 
-            <i class="fa-regular fa-star"></i> 
-        </span>
-
+        <div class="container mt-5">
+    <div class="rating">
+        <?php 
+        // Loop through the stored ratings in the session and display the stars
+        if (isset($_SESSION['stars']) && !empty($_SESSION['stars'])) {
+            foreach ($_SESSION['stars'] as $vote) {
+                // Assume 'value' is the rating score (1 to 5) for each vote
+                $rating = $vote['value']; // Example: assuming 'value' holds the score from 1 to 5
+                // Display the stars for each rating
+                for ($i = 0; $i < 5; $i++) {
+                    if ($i < $rating) {
+                        echo "<i class='fa-solid fa-star'></i>";  // Filled star
+                    } else {
+                        echo "<i class='fa-regular fa-star'></i>";  // Empty star
+                    }
+                }
+            }
+        } else {
+            echo "No ratings available.";
+        }
+        ?>
+    </div>
+</div>
         <!-- end of code taken for stars -->
 
         </div>

@@ -1,7 +1,7 @@
 <?php
     /* Define API key as constant. Include this file in src/functions.php */
 
-    const  API_KEY = "live_XkcPNIPT3K7zPQcnKOFffxFD9XZiOcfsBOUy4OyqIQHCSlaMKHrCoHDqH2z2z6CW ";
+    const  API_KEY = "live_XkcPNIPT3K7zPQcnKOFffxFD9XZiOcfsBOUy4OyqIQHCSlaMKHrCoHDqH2z2z6CW";
     
     $url = "https://api.thecatapi.com/v1/images/search?limit=100&api_key=" . API_KEY ;
     

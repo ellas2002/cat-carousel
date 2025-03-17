@@ -49,6 +49,44 @@ function getSelectedBreed(){
     }
 }
 
+function starRatings(){
+ // API endpoint for the vote
+    $url = "https://api.thecatapi.com/v1/votes?limit=5"; 
+
+    // Set the headers including the Authorization Bearer token
+    $headers = [
+        "Authorization: Bearer live_XkcPNIPT3K7zPQcnKOFffxFD9XZiOcfsBOUy4OyqIQHCSlaMKHrCoHDqH2z2z6CW"
+    ];
+
+    // Initialize cURL session
+    $ch = curl_init($url);
+
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+    // Execute the cURL request
+    $response = curl_exec($ch);
+
+    // Check if the request was successful
+    if ($response === false) {
+        curl_close($ch);
+        return []; // Return an empty array if the API call fails
+    }
+
+    // Close the cURL session
+    curl_close($ch);
+
+    // Decode the JSON response to PHP array
+    return json_decode($response, true);
+}
+
+if (!isset($_SESSION['stars'])) {
+    $_SESSION['stars'] = starRatings();
+}
+
+
+
 if (!isset($_SESSION['selected_breed'])) {
     $selected_breed = getSelectedBreed();
     if ($selected_breed) {
