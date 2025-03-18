@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link href="css/style.css" rel="stylesheet">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -89,25 +90,13 @@
                     <p><strong>Temperament:</strong> <?= htmlspecialchars($selected_breed['temperament']); ?></p>
                     <p><strong>Rating:</strong> <?= htmlspecialchars($selected_breed['stars']); ?></p>
                     <div class="rating">
-                        <?php 
-                        // Loop through the stored ratings in the session and display the stars
-                        if (isset($_SESSION['stars']) && !empty($_SESSION['stars'])) {
-                            foreach ($_SESSION['stars'] as $vote) {
-                                // Assume 'value' is the rating score (1 to 5) for each vote
-                                $rating = $vote['value']; // Example: assuming 'value' holds the score from 1 to 5
-                                // Display the stars for each rating
-                                for ($i = 0; $i < 5; $i++) {
-                                    if ($i < $rating) {
-                                        echo "<i class='fa-solid fa-star'></i>";  // Filled star
-                                    } else {
-                                        echo "<i class='fa-regular fa-star'></i>";  // Empty star
-                                    }
-                                }
-                            }
-                        } else {
-                            echo "No ratings available.";
-                        }
-                        ?>
+                        <span class="rating"> 
+                            <i class="fa-solid fa-star"></i> 
+                            <i class="fa-solid fa-star"></i> 
+                            <i class="fa-solid fa-star"></i> 
+                            <i class="fa-solid fa-star"></i> 
+                            <i class="fa-regular fa-star"></i> 
+                        </span>
                     </div>
                 </div>
             </div>
