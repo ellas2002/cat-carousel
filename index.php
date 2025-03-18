@@ -1,10 +1,12 @@
 <?php
+    session_start();
     include 'src/functions.php';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link href="css/style.css" rel="stylesheet">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -31,22 +33,21 @@
         <!-- Page content-->
         <div class="container mt-5">
         <h1>Cat Carousel</h1>
-        <h2>Select a cat breed</h2>
+        <h4>Select a cat breed</h4>
 
 
         <!--bootstrap grid set up and population -->
         <form method="GET" action="carousel.php">
-            <label for="cat-breed-select">Choose a breed:</label>
             <select id ="cat-breed-select" name="breed">
-                <?php forEach ($_SESSION['breeds'] as $breed): ?>
-                    <option value="<?= htmlspecialchars($breed['id']); ?>"
-                        <?= (isset($_GET['breed']) && $_GET['breed'] == $breed['id']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($breed['name']); ?>
+                <?php forEach ($_SESSION['breeds'] as $breeds): ?>
+                    <option value="<?= htmlspecialchars($breeds['id']); ?>"
+                        <?= (isset($_GET['breed']) && $_GET['breed'] == $breeds['id']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($breeds['name']); ?>
                     </option>
-                <?php endforeach; ?>
+                <?php endforeach; ?> 
 
             </select>
-            <input type="submit" value="see cats">
+            <input type="submit" value="see cats" class="cat_btn">
         </form>
 
 

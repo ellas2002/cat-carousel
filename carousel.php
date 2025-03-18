@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link href="css/style.css" rel="stylesheet">
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -29,87 +30,93 @@
             </div>
         </nav>
         <!-- Page content-->
-        <div class="container mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col">
 
-        <!-- code taken from carousel boot strap -->
-        <div class='carousel-wrapper'>.
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <?php 
-                // Check if images are set in the session
-                if (isset($_SESSION['images']) && !empty($_SESSION['images'])):
-                    $first = true; // Flag to mark the first image as active
-                    foreach ($_SESSION['images'] as $image):
-                ?>
-                    <!-- Carousel item for each image -->
-                    <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
-                        <img src="<?= htmlspecialchars($image['url']); ?>" class="d-block w-100" alt="Cat image">
-                    </div>
-                    <?php 
-                    // Mark first image processed
-                    $first = false;
-                    endforeach;
-                else:
-                ?>
+            <!-- code taken from carousel boot strap -->
+                    <div class='carousel-wrapper'>
+                        <div class="container">
+                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <?php 
+                                    // Check if images are set in the session
+                                    if (isset($_SESSION['images']) && !empty($_SESSION['images'])):
+                                        $first = true; // Flag to mark the first image as active
+                                        foreach ($_SESSION['images'] as $image):
+                                    ?>
+                                    <!-- Carousel item for each image -->
+                                    <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
+                                        <img src="<?= htmlspecialchars($image['url']); ?>" class="d-block w-100" alt="Cat image">
+                                    </div>
+                                    <?php 
+                                    // Mark first image processed
+                                        $first = false;
+                                        endforeach;
+                                        else:
+                                    ?>
                     <!-- If no images are available, show a placeholder -->
-                    <div class="carousel-item active">
-                        <img src="https://via.placeholder.com/150" class="d-block w-100" alt="No image available">
+                                    <div class="carousel-item active">
+                                        <img src="https://via.placeholder.com/150" class="d-block w-100" alt="No image available">
+                                    </div>
+                                    <?php endif; ?>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                                </div>
+                        </div>
                     </div>
-                <?php endif; ?>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-        </div>
+                </div>
+           
         <!-- end of code taken from carousel boot strap -->
                 
 
         <!-- descriptive section for each chosen cat -->
-         <?php if (isset($_SESSION['selected_breed'])): 
-            $breed = $_SESSION['selected_breed'];
-            ?>                
-                <div class="mt-5">
-                    <h3><?= htmlspecialchars($breed['name']); ?></h3>
-                    <p><strong>Description:</strong> <?= htmlspecialchars($breed['description']); ?></p>
-                    <p><strong>Origin:</strong> <?= htmlspecialchars($breed['origin']); ?></p>
-                    <p><strong>Temperament:</strong> <?= htmlspecialchars($breed['temperament']); ?></p>
+                
+                <?php if (isset($_SESSION['selected_breed'])): 
+                    $selected_breed = $_SESSION['selected_breed'];
+                ?>                
+                <div class="col">
+                    <h3><?= htmlspecialchars($selected_breed['name']); ?></h3>
+                    <p><strong>Description:</strong> <?= htmlspecialchars($selected_breed['description']); ?></p>
+                    <p><strong>Origin:</strong> <?= htmlspecialchars($selected_breed['origin']); ?></p>
+                    <p><strong>Temperament:</strong> <?= htmlspecialchars($selected_breed['temperament']); ?></p>
+                    <p><strong>Rating:</strong> <?= htmlspecialchars($selected_breed['stars']); ?></p>
+                    <div class="rating">
+                        <?php 
+                        // Loop through the stored ratings in the session and display the stars
+                        if (isset($_SESSION['stars']) && !empty($_SESSION['stars'])) {
+                            foreach ($_SESSION['stars'] as $vote) {
+                                // Assume 'value' is the rating score (1 to 5) for each vote
+                                $rating = $vote['value']; // Example: assuming 'value' holds the score from 1 to 5
+                                // Display the stars for each rating
+                                for ($i = 0; $i < 5; $i++) {
+                                    if ($i < $rating) {
+                                        echo "<i class='fa-solid fa-star'></i>";  // Filled star
+                                    } else {
+                                        echo "<i class='fa-regular fa-star'></i>";  // Empty star
+                                    }
+                                }
+                            }
+                        } else {
+                            echo "No ratings available.";
+                        }
+                        ?>
+                    </div>
                 </div>
-        <?php endif; ?>
+            </div>
+            <?php endif; ?>
+        </div>
+    
+        
+    <!-- end of descriptive section for each chosen cat -->
 
-        <!-- end of descriptive section for each chosen cat -->
-
-
-        <!-- code taken for stars -->
-        <div class="container mt-5">
-    <div class="rating">
-        <?php 
-        // Loop through the stored ratings in the session and display the stars
-        if (isset($_SESSION['stars']) && !empty($_SESSION['stars'])) {
-            foreach ($_SESSION['stars'] as $vote) {
-                // Assume 'value' is the rating score (1 to 5) for each vote
-                $rating = $vote['value']; // Example: assuming 'value' holds the score from 1 to 5
-                // Display the stars for each rating
-                for ($i = 0; $i < 5; $i++) {
-                    if ($i < $rating) {
-                        echo "<i class='fa-solid fa-star'></i>";  // Filled star
-                    } else {
-                        echo "<i class='fa-regular fa-star'></i>";  // Empty star
-                    }
-                }
-            }
-        } else {
-            echo "No ratings available.";
-        }
-        ?>
-    </div>
-</div>
-        <!-- end of code taken for stars -->
 
         </div>
         <!-- Bootstrap core JS-->
