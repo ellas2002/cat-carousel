@@ -39,10 +39,10 @@
         <!--bootstrap grid set up and population -->
         <form method="GET" action="carousel.php">
             <select id ="cat-breed-select" name="breed">
-                <?php forEach ($_SESSION['breeds'] as $breeds): ?>
-                    <option value="<?= htmlspecialchars($breeds['id']); ?>"
-                        <?= (isset($_GET['breed']) && $_GET['breed'] == $breeds['id']) ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($breeds['name']); ?>
+                <?php forEach ($_SESSION['breeds'] as $breed): ?>
+                    <option value="<?= htmlspecialchars($breed['id']); ?>"
+                        <?= (isset($_GET['breeds']) && $_GET['breeds'] == $breed['id']) ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($breed['name']); ?>
                     </option>
                 <?php endforeach; ?> 
 

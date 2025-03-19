@@ -42,23 +42,20 @@
                                 <div class="carousel-inner">
                                     <?php 
                                     // Check if images are set in the session
-                                    if (isset($_SESSION['images']) && !empty($_SESSION['images'])):
-                                        $first = true; // Flag to mark the first image as active
+                                    if (!empty($_SESSION['images'])):
+                                        $first = true;
                                         foreach ($_SESSION['images'] as $image):
                                     ?>
-                                    <!-- Carousel item for each image -->
-                                    <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
+                                    <div class="carousel-item <?= $first ? 'active' : ''; ?>">
                                         <img src="<?= htmlspecialchars($image['url']); ?>" class="d-block w-100" alt="Cat image">
                                     </div>
                                     <?php 
-                                    // Mark first image processed
                                         $first = false;
                                         endforeach;
-                                        else:
+                                    else:
                                     ?>
-                    <!-- If no images are available, show a placeholder -->
                                     <div class="carousel-item active">
-                                        <img src="https://via.placeholder.com/150" class="d-block w-100" alt="No image available">
+                                        <img src="https://via.placeholder.com/400" class="d-block w-100" alt="No image available">
                                     </div>
                                     <?php endif; ?>
                                 </div>
@@ -88,15 +85,19 @@
                     <p><strong>Description:</strong> <?= htmlspecialchars($selected_breed['description']); ?></p>
                     <p><strong>Origin:</strong> <?= htmlspecialchars($selected_breed['origin']); ?></p>
                     <p><strong>Temperament:</strong> <?= htmlspecialchars($selected_breed['temperament']); ?></p>
-                    <p><strong>Rating:</strong> <?= htmlspecialchars($selected_breed['stars']); ?></p>
+                    <p><strong>Rating:</strong> <?= htmlspecialchars($selected_breed['rating']); ?></p>
                     <div class="rating">
-                        <span class="rating"> 
-                            <i class="fa-solid fa-star"></i> 
-                            <i class="fa-solid fa-star"></i> 
-                            <i class="fa-solid fa-star"></i> 
-                            <i class="fa-solid fa-star"></i> 
-                            <i class="fa-regular fa-star"></i> 
-                        </span>
+                        <?php 
+                            $intelligence = $selected_breed['rating'] ?? 0;
+                            for ($i = 1; $i <= 5; $i++) {
+                                if ($i <= $rating) {
+                                    echo '<i class="fa-solid fa-star"></i> ';
+                                } else {
+                                    echo '<i class="fa-regular fa-star"></i> ';
+                                }
+                            }
+                         ?>
+
                     </div>
                 </div>
             </div>

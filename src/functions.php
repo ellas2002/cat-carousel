@@ -1,19 +1,14 @@
 <?php
-    include 'config/config.php';
-?>
+session_start(); // Start session at the top
+include 'config/config.php';
 
-<?php
-session_start(); /* this allows you to save data in $_SESSION */
-/* https://www.w3schools.com/php/php_sessions.asp */
-
-/* write PHP functions here */
 function getNames() {
-    $url = "https://api.thecatapi.com/v1/breeds";  // API Endpoint
-    $response = file_get_contents($url);  // Fetch data from API
+    $url = "https://api.thecatapi.com/v1/breeds";
+    $response = file_get_contents($url);
     if ($response === FALSE) {
-        return []; // Return an empty array if API call fails
+        return []; 
     }
-    return json_decode($response, true); // Convert JSON response to PHP array
+    return json_decode($response, true);
 }
 
 if (!isset($_SESSION['breeds'])) {
@@ -21,81 +16,35 @@ if (!isset($_SESSION['breeds'])) {
 }
 
 function getImages(){
-    
-    if (isset($_GET['breed'])) {
+    if (isset($_GET['breed'])) { // Ensure this matches form input
         $breedId = $_GET['breed'];
         $url = "https://api.thecatapi.com/v1/images/search?limit=10&breed_ids=" . $breedId;
 
         $response = file_get_contents($url);
+        if ($response === FALSE) {
+            return [];
+        }
 
-        return json_decode($response, true); // Convert JSON response to PHP array
-
+        return json_decode($response, true);
     }
     return [];
-    
 }
 
 function getSelectedBreed(){
-    if (isset($_GET['breed'])) {
+    if (isset($_GET['breed'])) { // Ensure this matches form input
         $selected_breed_id = $_GET['breed'];
-    
-        // Find the breed that matches the selected breed ID
         foreach ($_SESSION['breeds'] as $breed) {
             if ($breed['id'] == $selected_breed_id) {
-                $_SESSION['selected_breed'] = $breed;  // Store the selected breed in the session
-                break;
+                return $breed;
             }
         }
     }
+    return null;
 }
 
-function starRatings(){
- // API endpoint for the vote
-    $url = "https://api.thecatapi.com/v1/votes?limit=5"; 
-
-    // Set the headers including the Authorization Bearer token
-    $headers = [
-        "Authorization: Bearer live_XkcPNIPT3K7zPQcnKOFffxFD9XZiOcfsBOUy4OyqIQHCSlaMKHrCoHDqH2z2z6CW"
-    ];
-
-    // Initialize cURL session
-    $ch = curl_init($url);
-
-    // Set cURL options
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-    // Execute the cURL request
-    $response = curl_exec($ch);
-
-    // Check if the request was successful
-    if ($response === false) {
-        curl_close($ch);
-        return []; // Return an empty array if the API call fails
-    }
-
-    // Close the cURL session
-    curl_close($ch);
-
-    // Decode the JSON response to PHP array
-    return json_decode($response, true);
-}
-
-if (!isset($_SESSION['stars'])) {
-    $_SESSION['stars'] = starRatings();
-}
-
-
-
-if (!isset($_SESSION['selected_breed'])) {
-    $selected_breed = getSelectedBreed();
-    if ($selected_breed) {
-        $_SESSION['selected_breed'] = $selected_breed;
-    }
-}
-
-if (!isset($_SESSION['images'])) {
+// Always update selected breed and images if new breed is chosen
+if (isset($_GET['breed'])) {
+    $_SESSION['selected_breed'] = getSelectedBreed();
     $_SESSION['images'] = getImages();
 }
-
 ?>
