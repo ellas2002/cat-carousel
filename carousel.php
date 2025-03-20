@@ -87,13 +87,13 @@
                     <p><strong>Temperament:</strong> <?= htmlspecialchars($selected_breed['temperament']); ?></p>
                     <p><strong>Rating:</strong> <?= htmlspecialchars($selected_breed['rating']); ?></p>
                     <div class="rating">
-                        <?php 
-                            $intelligence = $selected_breed['rating'] ?? 0;
-                            for ($i = 1; $i <= 5; $i++) {
-                                if ($i <= $rating) {
-                                    echo '<i class="fa-solid fa-star"></i> ';
+                        <?php
+                            $rating = (int)$selected_breed['intelligence'];
+                            for ($i = 0; $i < 5; $i++) {
+                                if ($i < $rating) {
+                                    echo '<i class="fa-solid fa-star"></i>'; // Filled star
                                 } else {
-                                    echo '<i class="fa-regular fa-star"></i> ';
+                                    echo '<i class="fa-regular fa-star"></i>'; // Empty star
                                 }
                             }
                          ?>
